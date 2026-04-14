@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - TutorLink</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-50 p-4">
+
+<div class="w-full max-w-md bg-white shadow-xl rounded-lg p-6">
+
+    <!-- Logo -->
+    <div class="text-center mb-4">
+        <a href="/" class="flex justify-center mb-2">
+            <span class="text-3xl">🎓</span>
+        </a>
+        <h2 class="text-2xl font-bold">Welcome Back</h2>
+        <p class="text-gray-500">Log in to your TutorLink account</p>
+    </div>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="bg-red-100 text-red-700 p-2 rounded mb-4">
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Form -->
+    <form method="POST" action="{{ url_for('login') }}" class="space-y-4">
+
+        <div>
+            <label class="block mb-1">Email</label>
+            <input 
+                type="email" 
+                name="email"
+                placeholder="john@example.com"
+                class="w-full border p-2 rounded"
+                required
+            >
+        </div>
+
+        <div>
+            <label class="block mb-1">Password</label>
+            <input 
+                type="password"
+                name="password"
+                placeholder="••••••••"
+                class="w-full border p-2 rounded"
+                required
+            >
+        </div>
+
+        <button 
+            type="submit"
+            class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+        >
+            Log In
+        </button>
+
+    </form>
+
+    <!-- Demo info -->
+    <div class="text-center mt-4 text-sm text-gray-500">
+        <p>Demo: sarah@demo.com / demo123 (tutor)</p>
+        <p>alex@demo.com / demo123 (student)</p>
+        <p class="mt-2">
+            Don't have an account?
+            <a href="{{ url_for('signup') }}" class="text-blue-600 font-medium">Sign up</a>
+        </p>
+    </div>
+
+</div>
+
+</body>
+</html>
