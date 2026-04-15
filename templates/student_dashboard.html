@@ -7,6 +7,7 @@
 
 <body class="bg-light">
 
+<!-- NAVBAR -->
 <nav class="navbar navbar-dark bg-dark px-3">
     <span class="navbar-brand">TutorLink</span>
 
@@ -20,7 +21,7 @@
 
     <h3>Welcome {{ student.name }}</h3>
 
-    <!-- FLASH MESSAGE -->
+    <!-- FLASH MESSAGES -->
     {% with messages = get_flashed_messages() %}
       {% if messages %}
         <div class="alert alert-info mt-2">
@@ -29,51 +30,53 @@
       {% endif %}
     {% endwith %}
 
-    <!-- BOOKED SESSIONS -->
+    <!-- ================= BOOKINGS ================= -->
     <h4 class="mt-4">Your Booked Sessions</h4>
 
     {% if bookings and bookings|length > 0 %}
 
         {% for b in bookings %}
-        <div class="card p-3 mt-2">
+        <div class="card p-3 mt-3 shadow-sm">
 
             <h5>{{ b.subject }}</h5>
+
             <p><b>Tutor:</b> {{ b.tutor_name }}</p>
             <p><b>Date:</b> {{ b.date }} | {{ b.start }} - {{ b.end }}</p>
 
-            <!-- DEBUG (remove later) -->
-            <p style="color:red;">Tutor ID: {{ b.tutor_id }}</p>
+            <!-- ⭐ AVERAGE RATING -->
+            <p>
+                <b>Average Rating:</b>
+                {% if b.avg_rating %}
+                    {{ b.avg_rating }}
+                {% else %}
+                    Not rated yet
+                {% endif %}
+            </p>
 
-            {% for b in bookings %}
-<div class="card p-3 mt-2">
+            <!-- ⭐ YOUR RATING -->
+            <p>
+                <b>Your Rating:</b>
+                {% if b.my_rating %}
+                    {{ b.my_rating }} ⭐
+                {% else %}
+                    Not rated yet
+                {% endif %}
+            </p>
 
-    <h5>{{ b.subject }}</h5>
-    <p><b>Tutor:</b> {{ b.tutor_name }}</p>
-    <p><b>Date:</b> {{ b.date }} | {{ b.start }} - {{ b.end }}</p>
+            <!-- ⭐ RATE TUTOR FORM -->
+            <form action="/rate/{{ b.tutor_id }}" method="POST">
+    <select name="rating">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
 
-    <!-- ⭐ SHOW YOUR RATING -->
-    <p>
-        <b>Your Rating:</b> 
-        {{ b.my_rating if b.my_rating else "Not rated yet" }}
-    </p>
+    <button type="submit">Rate</button>
+</form>
 
-    <!-- ⭐ RATING FORM -->
-    <form action="/rate/{{ b.tutor_id }}" method="POST">
-        <label><b>Rate Tutor:</b></label>
-        <select name="rating" class="form-select w-25 d-inline">
-            <option value="1">1 ⭐</option>
-            <option value="2">2 ⭐</option>
-            <option value="3">3 ⭐</option>
-            <option value="4">4 ⭐</option>
-            <option value="5">5 ⭐</option>
-        </select>
-        <button type="submit" class="btn btn-success btn-sm">
-            Submit
-        </button>
-    </form>
-
-</div>
-{% endfor %}
+        </div>
         {% endfor %}
 
     {% else %}
@@ -90,26 +93,31 @@
 
     <hr>
 
-    <!-- REQUEST STATUS SECTION -->
+    <!-- ================= REQUESTS ================= -->
     <h4 class="mt-4">Your Slot Requests</h4>
 
     {% if requests and requests|length > 0 %}
 
         {% for r in requests %}
-        <div class="card p-3 mt-2">
+        <div class="card p-3 mt-3 shadow-sm">
 
             <p><b>Subject:</b> {{ r.subject }}</p>
             <p><b>Date:</b> {{ r.date }}</p>
             <p><b>Time:</b> {{ r.start }}</p>
+
             <p>
-                <b>Status:</b> 
+                <b>Status:</b>
+
                 {% if r.status == "pending" %}
                     <span class="text-warning">Pending</span>
+
                 {% elif r.status == "accepted" %}
                     <span class="text-success">Accepted</span>
+
                 {% elif r.status == "rejected" %}
                     <span class="text-danger">Rejected</span>
                 {% endif %}
+
             </p>
 
         </div>
