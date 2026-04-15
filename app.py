@@ -332,7 +332,7 @@ def student_dashboard():
         bookings=bookings,
         requests=req_list
     )
-# ---------------- TUTOR DASHBOARD ----------------
+
 # ---------------- TUTOR DASHBOARD ----------------
 @app.route("/tutor_dashboard")
 def tutor_dashboard():
@@ -353,13 +353,12 @@ def tutor_dashboard():
         # ---------------- AVAILABLE ----------------
         if s.get("status") == "available":
             available.append({
-                "slot_id": str(s["_id"]),
-                "subject": s.get("subject", ""),
-                "date": s.get("date", ""),
-                "start": s.get("start", ""),
-                "end": s.get("end", "")
-            })
-
+    "slot_id": str(s["_id"]),
+    "subject": s.get("subject", ""),
+    "date": s.get("date", ""),
+    "start": s.get("start", ""),
+    "end": s.get("end", "")
+})
         # ---------------- BOOKED / COMPLETED ----------------
         elif s.get("status") in ["booked", "completed"]:
 

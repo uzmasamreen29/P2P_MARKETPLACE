@@ -117,7 +117,7 @@
                     <!-- COMPLETE SESSION -->
                     {% if slot.status != "completed" %}
                     <form action="/complete_session" method="POST">
-                        <input type="hidden" name="slot_id" value="{{ slot._id }}">
+                        <input type="hidden" name="slot_id" value="{{ slot.slot_id }}">
                         <button class="btn btn-success btn-sm">
                             Mark Completed
                         </button>
